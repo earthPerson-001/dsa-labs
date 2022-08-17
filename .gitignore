@@ -1,0 +1,4 @@
+test/include/*
+test/src/*
+.vscode
+build/*
