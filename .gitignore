@@ -1,4 +1,6 @@
 test/include/*
 test/src/*
+lab?-*
+
 .vscode
 build/*
