@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "LinkedList.h"
+#include "LinkedList.hpp"
 
 
 Node::Node(): next(nullptr)
@@ -69,6 +69,7 @@ bool LinkedList::removeFromHead(int &data)
    if(HEAD==nullptr) return false;
 
    Node* newHead = this->HEAD->next;
+   data = HEAD->data;
 
    delete HEAD;
 

@@ -2,8 +2,8 @@
  * @brief linked list implementation using node pointer
  */
 
-#ifndef _LINKED_LIST_H_
-#define _LINKED_LIST_H_
+#ifndef _LINKED_LIST_HPP_
+#define _LINKED_LIST_HPP_
 
 class Node
 {
