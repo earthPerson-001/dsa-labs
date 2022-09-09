@@ -2,10 +2,20 @@
 #include "LinkedListStack.hpp"
 #include "iostream"
 #include "strings.h"
+#include "assert.h"
 
-const char STACK_TYPE[] = "linkedliststack";
-const int STACK_SIZE = 5;
 
+// STACK_TYPE = 0 for arraystack and STACK_TYPE = 1 for linkedlist stack
+enum stackTypes{
+    ARRAY_STACK = 0,
+    LINKED_LIST_STACK = 1,
+};
+
+int STACK_TYPE = ARRAY_STACK;
+int STACK_SIZE = 5;
+bool FIXED_STACK_SIZE = false;  // For linked list stack size
+
+// pushing element with exception handling
 bool _push(Stack* stack, int data)
 {
     try
@@ -21,6 +31,7 @@ bool _push(Stack* stack, int data)
     
 }
 
+// poping element with exception handling
 bool _pop(Stack* stack, int& data)
 {
     try
@@ -36,6 +47,7 @@ bool _pop(Stack* stack, int& data)
     
 }
 
+// get the top element with exception handling
 bool _top(Stack* stack, int& data)
 {
     try
@@ -51,6 +63,7 @@ bool _top(Stack* stack, int& data)
     
 }
 
+// display the top element from the stack
 void _displayTop(Stack* stack)
 {
     int top_value;
@@ -62,14 +75,63 @@ void _displayTop(Stack* stack)
     }
 }
 
-int main()
+int main(int argc, char* argv[])
 {
+    // Parsing valid command line argument
+    for(int i =1; i < argc; i++)
+    {
+        if(strcasecmp("--type", argv[i]) == 0 || strcasecmp("-t", argv[i]) == 0)
+        {
+            if(strcasecmp("linkedlist", argv[i+1]) == 0)
+            {
+                STACK_TYPE = LINKED_LIST_STACK;
+            }
+        }
+
+        if(strcasecmp("--size", argv[i]) == 0 || strcasecmp("-s", argv[i]) == 0)
+        {
+            int size = STACK_SIZE;
+            try
+            {
+                size = std::stoi(argv[i+1]);
+            }
+            catch(const std::invalid_argument& inv_arg)
+            {
+                std::cout << "\nThe given size is invalid, please enter a valid stack size.";
+            }
+
+            if (size < 0)
+            {
+                std::cout << "\n The entered size isn't a valid size, so using default size of " << STACK_SIZE << " .\n";
+            }
+            else
+            {
+                STACK_SIZE = size;
+            }
+            FIXED_STACK_SIZE = true;
+            
+        }
+    }
+
+    // Giving the information about the stack being initialized
+    if(STACK_TYPE==LINKED_LIST_STACK && FIXED_STACK_SIZE)
+    {
+        std::cout << "\nUsing LinkedList stack of size "<< STACK_SIZE << ".\n";
+    }
+    else if (STACK_TYPE==LINKED_LIST_STACK) 
+    {
+        std::cout << "\nUsing LinkedList stack of variable size.\n";
+    }
+    else 
+    {
+        std::cout << "\nUsing Array stack of size "<< STACK_SIZE << ".\n";
+    }
+
     Stack* stack;
 
-    if(strcasecmp(STACK_TYPE, "linkedliststack") == 0)
+    if(STACK_TYPE == LINKED_LIST_STACK)
     {
-        bool fixedSizeForStack = true;
-        stack = new LinkedListStack(fixedSizeForStack, 5);
+        stack = new LinkedListStack(FIXED_STACK_SIZE, 5);
     }
     else
     {
