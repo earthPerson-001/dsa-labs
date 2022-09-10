@@ -167,5 +167,10 @@ int main(int argc, char* argv[])
 
     std::cout << "\n isFull: " << stack->isFull() << std::endl;
 
+    _push(stack, 7);
+    _displayTop(stack);
+
+    delete stack;
+
     return 0;
 }
