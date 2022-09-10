@@ -13,6 +13,8 @@ public:
     // ctor
     ArrayStack(int size = 100);
 
+    virtual ~ArrayStack();
+
     // adds an element to the top of the stack
     void push(int data);
 

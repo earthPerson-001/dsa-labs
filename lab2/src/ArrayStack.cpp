@@ -61,3 +61,8 @@ int ArrayStack::top()
     return dataArray[topIndex];
 
 }
+
+ArrayStack::~ArrayStack()
+{
+    delete this->dataArray;
+}

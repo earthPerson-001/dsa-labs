@@ -5,6 +5,8 @@ class Stack
 {
 
 public:
+    virtual ~Stack(){};
+
     // adds an element into the stack
     virtual void push(int data) = 0;
 
