@@ -64,5 +64,5 @@ int ArrayStack::top()
 
 ArrayStack::~ArrayStack()
 {
-    delete this->dataArray;
+    delete[] this->dataArray;
 }
