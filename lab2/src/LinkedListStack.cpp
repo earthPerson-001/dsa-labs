@@ -51,14 +51,22 @@ bool LinkedListStack::isFull()
 int LinkedListStack::top()
 {
     if(this->isEmpty()) throw std::out_of_range("Stack Underflow");
-
-    return this->linkedliststack.HEAD->data;
+    int outputData;
+    bool returnValue = this->linkedliststack.getHeadData(outputData);
+    if(returnValue)
+    {
+        return outputData;
+    }
+    else
+    {
+        throw std::out_of_range("Stack Underflow");
+    }
 }
 
 int LinkedListStack::getNumberOfElements()
 {
     int count = 0;
-    for(Node* start = this->linkedliststack.HEAD; start != nullptr; start = start->next)
+    for(Node* start = this->linkedliststack.getHeadPointer(); start != nullptr; start = start->next)
     {
         assert(start!=nullptr);
         count++;

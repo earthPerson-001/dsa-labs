@@ -162,3 +162,32 @@ LinkedList::~LinkedList()
     }
 }
 
+Node* LinkedList::getHeadPointer()
+{
+    return this->HEAD;
+}
+
+Node* LinkedList::getTailPointer()
+{
+    return this->TAIL;
+}
+
+bool LinkedList::getHeadData(int& outData)
+{
+    if(!this->isEmpty())
+    {
+        outData = this->getHeadPointer()->data;
+        return 1;
+    }
+    return 0;
+}
+
+bool LinkedList::getTailData(int& outData)
+{
+    if(!this->isEmpty())
+    {
+        outData = this->getTailPointer()->data;
+        return 1;
+    }
+    return 0;
+}

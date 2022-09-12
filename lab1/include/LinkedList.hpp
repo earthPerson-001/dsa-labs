@@ -18,11 +18,17 @@ public:
 
 class LinkedList
 {
-public:
+private:
     Node* HEAD;
     Node* TAIL;
-
+public:
     LinkedList();
+
+    Node* getHeadPointer();
+    Node* getTailPointer();
+
+    bool getHeadData(int& outData);
+    bool getTailData(int& outData);
 
     // Returns true if the list is empty, and false otherwise
     bool isEmpty(); 
