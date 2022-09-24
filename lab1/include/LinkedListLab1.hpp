@@ -1,68 +1,159 @@
 /**
- * @brief linked list implementation using node pointer
+ * @file LinkedListLab1.hpp
+ * @author Bishal Neupane
+ * @brief Linked list implementation for integer data type.
+ * @version 0.1
+ * @date 2022-09-24
+ * 
+ * @copyright Copyright (c) 2022
  */
 
-#ifndef _LINKED_LIST_HPP_
-#define _LINKED_LIST_HPP_
+#ifndef _LINKED_LIST_LAB_1_HPP_
+#define _LINKED_LIST_LAB_1_HPP_
 
+/**
+ * @brief Datatype representing the node of a linked list.
+ * Handle nullptr properly as unfilled state defaults to nullptr.
+ */
 class Node
 {
 public:
     int data;
     Node* next;
 
-    // ctors
+    /**
+     * @brief Default Constructor
+     * 
+     */
     Node();
+
+    /**
+     * @brief Parametrized Constructor
+     * 
+     * @param data: The integer data to be stroed in the node
+     * @param next: Node pointer pointer to next node, defaults to nullptr
+     */
     Node(int data, Node* next=nullptr);
 };
 
+/**
+ * @brief Linked List implementation for Node datatype
+ * 
+ */
 class LinkedList
 {
 private:
+    /// @brief Pointer to the first node of the linked list
     Node* HEAD;
+    /// @brief Pointer to the last node of the linekd list
     Node* TAIL;
 public:
+    /**
+     * @brief ctor
+     * 
+     */
     LinkedList();
 
+    /**
+     * @brief getter for head pointer
+     * 
+     * @return Node* 
+     */
     Node* getHeadPointer();
+
+    /**
+     * @brief getter for tail pointer
+     * 
+     * @return pointer @param Node* 
+     */
     Node* getTailPointer();
 
+    /**
+     * @brief getter for data stored in head pointer
+     * 
+     * @param outData 
+     * @return true if the list isn't empty and outData will have valid data in this case,
+     * @return false otherwise
+     */
     bool getHeadData(int& outData);
+
+    /**
+     * @brief getter for data stored in tail pointer
+     * 
+     * @param outData 
+     * @return true if the list isn't empty and outData will have valid data in this case,
+     * @return false otherwise
+     */
     bool getTailData(int& outData);
 
-    // Returns true if the list is empty, and false otherwise
+    /**
+     * @brief To find out if the list is empty or not
+     * 
+     * @return true if the list is empty,
+     * @return false otherwise
+     */ 
     bool isEmpty(); 
 
-    // Inserts an element to the beginning of the list
+    /**
+     * @brief Inserts an element to the beginning of the list
+     * 
+     * @param data The integer to be inserted
+     */
     void addToHead(int data);
 
-    // Inserts an element to the end of the list
+    /**
+     * @brief Inserts an element to the end of the list
+     * 
+     * @param data The integer to be inserted
+     */
     void addToTail(int data);  
 
-    // Inserts an element after the given predecessor node
+    /**
+     * @brief Inserts an element after the given predecessor node
+     * @param data integer data to insert
+     * @param predecessor the node after which new node is to be created
+     */
     void add(int data, Node* predecessor); 
 
-    // Removes the first node in the list
-    // Returns true if removed successfully, false otherwise
-    /** @param data: the data present on the removed node (if it was removed successfully) */
+    /**
+     * @brief 
+     * @param data: the data present on the removed node (if it was removed successfully) 
+     * @returns true if removed successfully, false otherwise
+     */
     bool removeFromHead(int& data);
 
-    // Removes the node with the given data
+    /**
+     * @brief Removes the node with the given data
+     * 
+     * @param data The data whose node is to be removed
+     */
     void remove(int data);
 
-    // Returns the pointer to the node with the requested data
-    /** @param outputNodePointer: the retrived node pointer, pass by reference is required to properly set the output pointer */
+    /**
+     * @brief Returns the pointer to the node with the requested data
+     * @param outputNodePointer: the retrived node pointer, pass by reference is required to properly set the output pointer
+    */
     bool retrieve(int data, Node* &outputNodePointer);
 
-    // Returns true if the data exists in the list, and false otherwise
+    /**
+     * @brief search function
+     * 
+     * @param data the integer to search
+     * @returns true if the data exists in the list, and false otherwise 
+     */
     bool search(int data);
 
-    // Displays the contents of the list
+    /**
+     * @brief Displays the contents of the list
+     * 
+     */
     void traverse();
 
-    // Destructor
+    /**
+     * @brief destructor
+     * 
+     */
     ~LinkedList();
-
 
 };
 #endif
