@@ -999,7 +999,7 @@ FILE_PATTERNS          = *.c \
 # be searched for input files as well.
 # The default value is: NO.
 
-RECURSIVE              = YES
+RECURSIVE              = NO
 
 # The EXCLUDE tag can be used to specify files and/or directories that should be
 # excluded from the INPUT source files. This way you can easily exclude a
@@ -2723,3 +2723,7 @@ GENERATE_LEGEND        = YES
 # The default value is: YES.
 
 DOT_CLEANUP            = YES
+
+INCLUDE_PATH += lab1/include lab2/include lab3/include  lab4/include lab5/include lab6/include lab7/include
+INPUT += lab1/src lab2/src lab3/src lab4/src lab5/src lab6/src lab7/src \
+        lab1/include lab2/include lab3/include  lab4/include lab5/include lab6/include lab7/include
