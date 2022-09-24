@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "LinkedList.hpp"
+#include "LinkedListLab1.hpp"
 
 int main()
 {

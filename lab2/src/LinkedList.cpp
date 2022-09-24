@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "LinkedList.hpp"
+#include "LinkedListLab2.hpp"
 
 
 Node::Node(): next(nullptr)

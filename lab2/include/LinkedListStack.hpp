@@ -2,7 +2,7 @@
 #define _LINKED_LIST_STACK_HPP_
 
 #include "Stack.hpp"
-#include "LinkedList.hpp"
+#include "LinkedListLab2.hpp"
 
 class LinkedListStack: public Stack 
 {

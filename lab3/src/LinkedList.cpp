@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "LinkedList.hpp"
+#include "LinkedListLab3.hpp"
 
 template <class NodeData>
 Node<NodeData>::Node(): next(nullptr)

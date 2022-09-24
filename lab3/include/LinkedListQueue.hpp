@@ -2,7 +2,7 @@
 #define _LINKED_LIST_QUEUE_HPP_
 
 #include "Queue.hpp"
-#include "LinkedList.hpp"
+#include "LinkedListLab3.hpp"
 
 template <class Data>
 class LinkedListQueue: public Queue<Data>
