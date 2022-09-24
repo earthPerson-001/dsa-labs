@@ -134,22 +134,6 @@ bool LinkedList::search(int data)
 
 }
 
-// Displays the contents of the list
-void LinkedList::traverse()
-{
-    std::cout << "\n------------------------------------------------------------\n";
-    std::cout <<   "|S.N.     |     DATA                                        \n";
-
-    if(HEAD==nullptr) return;
-
-    int sn=1;
-    for(Node* start = HEAD; start != nullptr; start=start->next)
-    {
-        std::cout << "|" << sn << "        |     " << start->data << std::endl;
-        sn++;
-    }
-}
-
 LinkedList::~LinkedList()
 {
 

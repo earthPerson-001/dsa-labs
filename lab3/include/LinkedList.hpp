@@ -59,9 +59,6 @@ public:
     // Returns true if the data exists in the list, and false otherwise
     bool search(LinkedListData data);
 
-    // Displays the contents of the list
-    void traverse();
-
     // Destructor
     ~LinkedList();
 
