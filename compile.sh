@@ -5,22 +5,33 @@ files_flag=''
 build_flag=''
 files_available='false'
 custom_build_folder='false'
+doxygen_flag='false'
 
 print_usage() {
-  printf "\nUsage: compile.sh [-f Directory containing src and include files] \n [ -r whether to run or not]\n [ -b build directory]\n"
+  printf "\nUsage: compile.sh \
+  \n [ -f Directory containing src and include files] \
+  \n [ -r whether to run or not] \
+  \n [ -b build directory] \
+  \n [ -d whether to update doxygen or not] \
+  \n"
 }
 
 # Taking the arguments with flags
-while getopts 'rf:b:' flag; do
+while getopts 'rf:b:d' flag; do
   case "${flag}" in
-    r) run_flag='true' ;;
+    r) run_flag='true' 
+       ;;
     f) files_flag="${OPTARG}"
-       files_available='true' ;;
+       files_available='true' 
+       ;;
     b) build_flag="${OPTARG}"
        custom_build_folder='true'
        ;;
+    d) doxygen_flag='true' 
+       ;;
     *) print_usage
-       exit 1 ;;
+       exit 1 
+       ;;
   esac
 done
 
@@ -70,10 +81,32 @@ echo -e "${GREEN}Build Directory: ${YELLOW} ${BUILD_DIRECTORY} ${RESET}\n"
 EXECUTABLE_NAME="app"
 
 # The compiler command
-g++ ${SOURCE_DIRECTORY}/*.cpp -o ${BUILD_DIRECTORY}/${EXECUTABLE_NAME} -I ${INCLUDE_DIRECTORY}
+g++ ${SOURCE_DIRECTORY}/*.cpp -o ${BUILD_DIRECTORY}/${EXECUTABLE_NAME} -I ${INCLUDE_DIRECTORY} \
+   -Wall -Wextra
 
 # Checking if the app is required to run or not, opening the app if it is required
 if [[ ${run_flag} == "true" ]] ; then 
     echo -e "${CYAN}Opening the app from ${MAGENTA}${BUILD_DIRECTORY}/${EXECUTABLE_NAME} ${RESET}"
     ${BUILD_DIRECTORY}/${EXECUTABLE_NAME}
+fi
+
+
+#doxygen stuffs
+if [[ ${doxygen_flag} == "true" ]] ; then
+
+  FILE_TO_WRITE_TO="Doxygen.manual"; # the doxygen config file for output of the generated files
+  GITIGNORE_PATH=".gitignore"; # the gitignore files to ignores files and folders present in there
+
+  # making an array out of gitignores
+  arr=()
+  while IFS= read -r line || [[ "$line" ]]; do
+    arr+=("$line")
+  done < ${GITIGNORE_PATH}
+
+  # TODO: exclude directories inside of gitignores
+  echo "INPUT += \\ ">>${FILE_TO_WRITE_TO};
+  find . -name "*.cpp" ! -wholename ${arr} -prune \ -exec bash -c "echo '\"{}\" \\' >> ${FILE_TO_WRITE_TO}" \;
+
+  echo "INCLUDE_PATH += \\ ">> ${FILE_TO_WRITE_TO};
+  find . -name "*.hpp" ! -wholename ${arr} -prune \ -exec bash -c "echo '\"{}\" \\' >> ${FILE_TO_WRITE_TO}" \;
 fi
