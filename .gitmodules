@@ -4,3 +4,6 @@
 [submodule "lab5"]
 	path = lab5
 	url = git@github.com:Eemayas/CE2020_Lab5_30_31.git
+[submodule "lab6"]
+	path = lab6
+	url = git@github.com:Eemayas/CE2020_Lab6_30_31.git
