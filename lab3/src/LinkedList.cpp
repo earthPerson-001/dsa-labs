@@ -7,7 +7,7 @@ Node<NodeData>::Node(): next(nullptr)
 {}
 
 template <class NodeData>
-Node<NodeData>::Node(NodeData data, Node<NodeData> *next): data(data), next(next)
+Node<NodeData>::Node(NodeData data, Shared_Node_Ptr<NodeData> next): data(data), next(next)
 {}
 
 template <class LinkedListData>
@@ -27,7 +27,7 @@ bool LinkedList<LinkedListData>::isEmpty()
 template <class LinkedListData>
 void LinkedList<LinkedListData>::addToHead(LinkedListData data)
 {
-    Node<LinkedListData>* newNode = new Node(data, this->HEAD);
+    Shared_Node_Ptr<LinkedListData> newNode = std::make_shared<Node<LinkedListData>>(data, this->HEAD);
     if(this->HEAD==nullptr)
     {
         this->TAIL=newNode;
@@ -46,7 +46,7 @@ void LinkedList<LinkedListData>::addToTail(LinkedListData data)
     }
     else
     {
-        Node<LinkedListData>* newNode = new Node<LinkedListData>(data, nullptr);
+        Shared_Node_Ptr<LinkedListData> newNode = std::make_shared<Node<LinkedListData>>(data, nullptr);
         this->TAIL->next = newNode;
         TAIL=newNode;
     }
@@ -54,7 +54,7 @@ void LinkedList<LinkedListData>::addToTail(LinkedListData data)
 
 // Inserts an element after the given predecessor node
 template <class LinkedListData>
-void LinkedList<LinkedListData>::add(LinkedListData data, Node<LinkedListData> *predecessor)
+void LinkedList<LinkedListData>::add(LinkedListData data, Shared_Node_Ptr<LinkedListData> predecessor)
 {
     if(predecessor==this->TAIL)
     {
@@ -62,7 +62,7 @@ void LinkedList<LinkedListData>::add(LinkedListData data, Node<LinkedListData> *
     }
     else
     {
-        Node<LinkedListData>* newNode = new Node<LinkedListData>(data, predecessor->next);
+        Shared_Node_Ptr<LinkedListData> newNode = std::make_shared<LinkedListData>(data, predecessor->next);
         predecessor->next = newNode;
     }
 }
@@ -75,12 +75,9 @@ bool LinkedList<LinkedListData>::removeFromHead(LinkedListData &data)
 {
    if(HEAD==nullptr) return false;
 
-   Node<LinkedListData>* newHead = this->HEAD->next;
    data = HEAD->data;
 
-   delete HEAD;
-
-   HEAD = newHead;
+   HEAD = this->HEAD->next;
 
    return true;
 }
@@ -93,13 +90,11 @@ void LinkedList<LinkedListData>::remove(LinkedListData data)
 
     if(HEAD->data==data) this->removeFromHead(data);
 
-    for(Node<LinkedListData>* start = HEAD; start->next != nullptr; start=start->next)
+    for(Shared_Node_Ptr<LinkedListData> start = HEAD; start->next != nullptr; start=start->next)
     {
         if(start->next->data == data)
         {
-            Node<LinkedListData>* nodeToRemove = start->next;
             start->next = start->next->next;
-            delete nodeToRemove;
         }
     }
 }
@@ -107,11 +102,11 @@ void LinkedList<LinkedListData>::remove(LinkedListData data)
 // Returns the pointer to the node with the requested data
 /** @param outputNodePointer: the retrived node pointer */
 template <class LinkedListData>
-bool LinkedList<LinkedListData>::retrieve(LinkedListData data, Node<LinkedListData>* &outputNodePointer)
+bool LinkedList<LinkedListData>::retrieve(LinkedListData data, Shared_Node_Ptr<LinkedListData> &outputNodePointer)
 {
     if(HEAD==nullptr) return false;
 
-    for(Node<LinkedListData>* start = HEAD; start != nullptr; start=start->next)
+    for(Shared_Node_Ptr<LinkedListData> start = HEAD; start != nullptr; start=start->next)
     {
         if(start->data == data)
         {
@@ -133,7 +128,7 @@ bool LinkedList<LinkedListData>::search(LinkedListData data)
 {
     if(HEAD==nullptr) return false;
 
-    for(Node<LinkedListData>* start = HEAD; start != nullptr; start=start->next)
+    for(Shared_Node_Ptr<LinkedListData> start = HEAD; start != nullptr; start=start->next)
     {
         if(start->data == data)
         {
@@ -147,24 +142,17 @@ bool LinkedList<LinkedListData>::search(LinkedListData data)
 template <class LinkedListData>
 LinkedList<LinkedListData>::~LinkedList()
 {
-
-    while(HEAD!=NULL)
-    {
-        Node<LinkedListData>* nodeToDelete = HEAD;
-        HEAD=HEAD->next;
-
-        delete nodeToDelete;
-    }
+    this->HEAD = nullptr;
 }
 
 template <class LinkedListData>
-Node<LinkedListData>* LinkedList<LinkedListData>::getHeadPointer()
+Shared_Node_Ptr<LinkedListData> LinkedList<LinkedListData>::getHeadPointer()
 {
     return this->HEAD;
 }
 
 template <class LinkedListData>
-Node<LinkedListData>* LinkedList<LinkedListData>::getTailPointer()
+Shared_Node_Ptr<LinkedListData> LinkedList<LinkedListData>::getTailPointer()
 {
     return this->TAIL;
 }

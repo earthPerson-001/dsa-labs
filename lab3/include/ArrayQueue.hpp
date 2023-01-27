@@ -13,6 +13,7 @@
 #define _ARRAY_QUEUE_HPP_
 
 #include "Queue.hpp"
+#include <memory>
 
 /**
  * @brief Queue implementation using generic arrays
@@ -23,8 +24,8 @@ template <class Data>
 class ArrayQueue: public Queue<Data>
 {
 private:
-    /// @brief The underlying array to store data
-    Data* dataArray;
+    /// @brief The underlying array to store data (refrence counted shared pointer is used)
+    std::shared_ptr<Data[]> dataArray;
     /// @brief The index pointing to the front of the queue
     int frontIndex;
     /// @brief The index pointing to the back of the queue
@@ -38,7 +39,7 @@ public:
      * 
      * @param size The maximum size of the queue
      */
-    ArrayQueue(int size = 10);
+    ArrayQueue(std::size_t size = 10);
 
     /**
      * @brief destructor

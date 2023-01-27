@@ -2,9 +2,9 @@
 #include <iostream>
 
 template <class Data>
-ArrayQueue<Data>::ArrayQueue(int size): maxQueueSize(size)
+ArrayQueue<Data>::ArrayQueue(std::size_t size): maxQueueSize(size)
 {
-    this->dataArray = new Data[maxQueueSize];
+    this->dataArray = std::shared_ptr<Data[]>(new Data[maxQueueSize]);
     this->frontIndex = -1;
     this->backIndex = -1;
 }
@@ -12,7 +12,7 @@ ArrayQueue<Data>::ArrayQueue(int size): maxQueueSize(size)
 template <class Data>
 ArrayQueue<Data>::~ArrayQueue()
 {
-    delete[] this->dataArray;
+
 }
 
 template <class Data>

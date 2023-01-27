@@ -6,7 +6,7 @@
 Node::Node(): next(nullptr)
 {}
 
-Node::Node(int data, Node *next): data(data), next(next)
+Node::Node(int data, Shared_Node_Ptr next): data(data), next(next)
 {}
 
 LinkedList::LinkedList(): HEAD(nullptr), TAIL(nullptr)
@@ -23,7 +23,7 @@ bool LinkedList::isEmpty()
 // Inserts an element to the beginning of the list
 void LinkedList::addToHead(int data)
 {
-    Node* newNode = new Node(data, this->HEAD);
+    Shared_Node_Ptr newNode = std::make_shared<Node>(data, this->HEAD);
     if(this->HEAD==nullptr)
     {
         this->TAIL=newNode;
@@ -41,14 +41,14 @@ void LinkedList::addToTail(int data)
     }
     else
     {
-        Node* newNode = new Node(data, nullptr);
+        Shared_Node_Ptr newNode = std::make_shared<Node>(data, nullptr);
         this->TAIL->next = newNode;
         TAIL=newNode;
     }
 }
 
 // Inserts an element after the given predecessor node
-void LinkedList::add(int data, Node *predecessor)
+void LinkedList::add(int data, Shared_Node_Ptr predecessor)
 {
     if(predecessor==this->TAIL)
     {
@@ -56,7 +56,7 @@ void LinkedList::add(int data, Node *predecessor)
     }
     else
     {
-        Node* newNode = new Node(data, predecessor->next);
+        Shared_Node_Ptr newNode = std::make_shared<Node>(data, predecessor->next);
         predecessor->next = newNode;
     }
 }
@@ -68,10 +68,8 @@ bool LinkedList::removeFromHead(int &data)
 {
    if(HEAD==nullptr) return false;
 
-   Node* newHead = this->HEAD->next;
+   Shared_Node_Ptr newHead = this->HEAD->next;
    data = HEAD->data;
-
-   delete HEAD;
 
    HEAD = newHead;
 
@@ -85,24 +83,23 @@ void LinkedList::remove(int data)
 
     if(HEAD->data==data) this->removeFromHead(data);
 
-    for(Node* start = HEAD; start->next != nullptr; start=start->next)
+    for(Shared_Node_Ptr start = HEAD; start->next != nullptr; start=start->next)
     {
         if(start->next->data == data)
         {
-            Node* nodeToRemove = start->next;
+            // because of shared_ptr, there is no need to delete manually
             start->next = start->next->next;
-            delete nodeToRemove;
         }
     }
 }
 
 // Returns the pointer to the node with the requested data
-/** @param outputNodePointer: the retrived node pointer */
-bool LinkedList::retrieve(int data, Node* &outputNodePointer)
+/** @param outputNodePointer: the retrived shared node pointer */
+bool LinkedList::retrieve(int data, Shared_Node_Ptr &outputNodePointer)
 {
     if(HEAD==nullptr) return false;
 
-    for(Node* start = HEAD; start != nullptr; start=start->next)
+    for(Shared_Node_Ptr start = HEAD; start != nullptr; start=start->next)
     {
         if(start->data == data)
         {
@@ -123,7 +120,7 @@ bool LinkedList::search(int data)
 {
     if(HEAD==nullptr) return false;
 
-    for(Node* start = HEAD; start != nullptr; start=start->next)
+    for(Shared_Node_Ptr start = HEAD; start != nullptr; start=start->next)
     {
         if(start->data == data)
         {
@@ -143,7 +140,7 @@ void LinkedList::traverse()
     if(HEAD==nullptr) return;
 
     int sn=1;
-    for(Node* start = HEAD; start != nullptr; start=start->next)
+    for(Shared_Node_Ptr start = HEAD; start != nullptr; start=start->next)
     {
         std::cout << "|" << sn << "        |     " << start->data << std::endl;
         sn++;
@@ -155,19 +152,16 @@ LinkedList::~LinkedList()
 
     while(HEAD!=NULL)
     {
-        Node* nodeToDelete = HEAD;
         HEAD=HEAD->next;
-
-        delete nodeToDelete;
     }
 }
 
-Node* LinkedList::getHeadPointer()
+Shared_Node_Ptr LinkedList::getHeadPointer()
 {
     return this->HEAD;
 }
 
-Node* LinkedList::getTailPointer()
+Shared_Node_Ptr LinkedList::getTailPointer()
 {
     return this->TAIL;
 }

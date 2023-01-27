@@ -97,7 +97,7 @@ template <class Data>
 int LinkedListQueue<Data>::getNumberOfElements()
 {
     int count = 0;
-    for(Node<Data>* start = this->linkedlist->getHeadPointer(); start != nullptr; start = start->next)
+    for(Shared_Node_Ptr<Data> start = this->linkedlist->getHeadPointer(); start != nullptr; start = start->next)
     {
         assert(start!=nullptr);
         count++;

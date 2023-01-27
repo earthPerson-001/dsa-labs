@@ -66,7 +66,7 @@ int LinkedListStack::top()
 int LinkedListStack::getNumberOfElements()
 {
     int count = 0;
-    for(Node* start = this->linkedliststack.getHeadPointer(); start != nullptr; start = start->next)
+    for(Shared_Node_Ptr start = this->linkedliststack.getHeadPointer(); start != nullptr; start = start->next)
     {
         assert(start!=nullptr);
         count++;

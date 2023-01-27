@@ -22,7 +22,7 @@ int main()
     list.remove(8);
     list.traverse();
 
-    Node* outputPointer = nullptr;
+    Shared_Node_Ptr outputPointer = nullptr;
     int dataToRetrive = 5;
 
     bool retrivalSuccess = list.retrieve(dataToRetrive, outputPointer);

@@ -12,6 +12,14 @@
 #ifndef _LINKED_LIST_HPP_
 #define _LINKED_LIST_HPP_
 
+#include <memory>
+
+// using Shared_Node_Ptr as alias to the reference counted shared pointer enclosing node pointer
+template <typename NodeData>
+class Node;
+template <typename NodeData>
+using Shared_Node_Ptr = std::shared_ptr<Node<NodeData>>;
+
 /**
  * @brief Datatype representing the node of the linkedlist.
  * Handle nullptr properly as the uninitialized state defaults to nullptr
@@ -26,7 +34,7 @@ public:
     /// @brief The generic data stored by the node
     NodeData data;
     /// @brief Pointer pointing to the next node
-    Node* next;
+    Shared_Node_Ptr<NodeData> next;
 
     /**
      * @brief default constructor
@@ -40,7 +48,7 @@ public:
      * @param data the data to be stored 
      * @param next pointer pointing to the next node
      */
-    Node(NodeData data, Node* next=nullptr);
+    Node(NodeData data, Shared_Node_Ptr<NodeData> next=nullptr);
 };
 
 /**
@@ -53,9 +61,9 @@ class LinkedList
 {
 private:
     /// @brief pointer pointing to the head of the linked list
-    Node<LinkedListData>* HEAD;
+    Shared_Node_Ptr<LinkedListData> HEAD;
     /// @brief pointer pointing to the tail of the linked list
-    Node<LinkedListData>* TAIL;
+    Shared_Node_Ptr<LinkedListData> TAIL;
 public:
     /**
      * @brief default constructor
@@ -68,13 +76,13 @@ public:
      * 
      * @return Node<LinkedListData>*, head of the linked list
      */
-    Node<LinkedListData>* getHeadPointer();
+    Shared_Node_Ptr<LinkedListData> getHeadPointer();
     /**
      * @brief getter
      * 
      * @return Node<LinkedListData>* , tail of the linked list
      */
-    Node<LinkedListData>* getTailPointer();
+    Shared_Node_Ptr<LinkedListData> getTailPointer();
 
     /**
      * @brief getter
@@ -122,7 +130,7 @@ public:
      * @param data The data to be inserted
      * @param predecessor Pointer pointing to node after which a new node is to be added
      */
-    void add(LinkedListData data, Node<LinkedListData>* predecessor); 
+    void add(LinkedListData data, Shared_Node_Ptr<LinkedListData> predecessor); 
 
     /**
      * @brief Removes the first node in the list
@@ -147,7 +155,7 @@ public:
      * @returns true if the data retrival was successful, false otherwise
      * The outputNodePointer is updated if the data retrival was successful
      */
-    bool retrieve(LinkedListData data, Node<LinkedListData>* &outputNodePointer);
+    bool retrieve(LinkedListData data, Shared_Node_Ptr<LinkedListData> &outputNodePointer);
 
     /**
      * @brief search the give data
