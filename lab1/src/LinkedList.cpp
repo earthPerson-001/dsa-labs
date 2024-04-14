@@ -99,17 +99,13 @@ bool LinkedList::retrieve(int data, Shared_Node_Ptr &outputNodePointer)
 {
     if(HEAD==nullptr) return false;
 
+    outputNodePointer=nullptr;
     for(Shared_Node_Ptr start = HEAD; start != nullptr; start=start->next)
     {
         if(start->data == data)
         {
             outputNodePointer = start;
             return true;
-        }
-        else
-        {
-            outputNodePointer=nullptr;
-            return false;
         }
     }
     return false;
