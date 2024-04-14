@@ -80,14 +80,17 @@ echo -e "${GREEN}Build Directory: ${YELLOW} ${BUILD_DIRECTORY} ${RESET}\n"
 
 EXECUTABLE_NAME="app"
 
+# creating build directory if it doesn't exist already
+[ ! -d "${BUILD_DIRECTORY}" ] && echo -e "${BLUE} Creating build directory directory: ${YELLOW} ${BUILD_DIRECTORY} ${RESET} \n" && mkdir "${BUILD_DIRECTORY}"
+
 # The compiler command
-g++ ${SOURCE_DIRECTORY}/*.cpp -o ${BUILD_DIRECTORY}/${EXECUTABLE_NAME} -I ${INCLUDE_DIRECTORY} \
+g++ ${SOURCE_DIRECTORY}/*.cpp -o "${BUILD_DIRECTORY}/${EXECUTABLE_NAME}" -I "${INCLUDE_DIRECTORY}" \
    -Wall -Wextra
 
 # Checking if the app is required to run or not, opening the app if it is required
 if [[ ${run_flag} == "true" ]] ; then 
     echo -e "${CYAN}Opening the app from ${MAGENTA}${BUILD_DIRECTORY}/${EXECUTABLE_NAME} ${RESET}"
-    ${BUILD_DIRECTORY}/${EXECUTABLE_NAME}
+    "${BUILD_DIRECTORY}/${EXECUTABLE_NAME}"
 fi
 
 
